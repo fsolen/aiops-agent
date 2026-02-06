@@ -1,0 +1,47 @@
+flowchart LR
+
+subgraph Monitoring_Sources
+A[Zabbix]
+B[Graylog]
+end
+
+subgraph Agents
+ZA[Zabbix Agent]
+GA[Graylog Agent]
+TA[Topology Agent - NetBox]
+RA[Reasoning Orchestrator]
+VA[Voice Interaction Agent]
+end
+
+subgraph Data_and_Tools
+TL[Shared Tool Library]
+TS[Time-Series Metrics Store]
+LS[Log Store]
+CMDB[NetBox CMDB / Dependency Graph]
+end
+
+subgraph Actions
+PBX[IP PBX / Voice Gateway]
+ITSM[Ticketing System]
+NOTIF[Notification Systems]
+end
+
+A --> ZA
+B --> GA
+
+ZA --> RA
+GA --> RA
+TA --> RA
+
+RA --> TL
+
+TL --> TS
+TL --> LS
+TL --> CMDB
+
+RA -->|High Severity| VA
+RA -->|Medium/Low| ITSM
+RA -->|Notify| NOTIF
+
+VA --> PBX
+VA --> RA

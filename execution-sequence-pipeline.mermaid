@@ -1,0 +1,49 @@
+flowchart TD
+
+A[Zabbix Alarm Webhook] --> B[Alarm Ingestion]
+
+B --> C[Normalize Alarm Data]
+
+C --> D[Context Enrichment]
+
+D --> D1[Query Topology Agent - NetBox]
+D --> D2[Identify Related Services]
+D --> D3[Identify Related Hostgroups]
+
+D --> E[Define Analysis Time Window t-15m]
+
+E --> F[Metrics Retrieval]
+
+F --> F1[Call Zabbix Agent - Metrics]
+F --> F2[Call Infrastructure Metrics Sources]
+
+F --> G[Logs Retrieval]
+
+G --> G1[Call Graylog Agent]
+G --> G2[Fetch Related Log Streams]
+
+G --> H[Anomaly Detection Service]
+
+H --> I[Correlation Builder]
+
+I --> I1[Metric Correlations]
+I --> I2[Log Correlations]
+I --> I3[Dependency Impact Graph]
+
+I --> J[Reasoning Orchestrator - LLM]
+
+J --> J1[Root Cause Hypothesis Generation]
+J --> J2[Confidence Scoring]
+J --> J3[Recommended Action]
+
+J3 --> K{Severity >= High?}
+
+K -->|Yes| L[Trigger Voice Agent Call]
+K -->|No| M[Create Ticket / Notification]
+
+L --> N[Voice Interaction Loop]
+
+N --> N1[Speech to Text]
+N --> N2[Dynamic Question Received]
+N --> N3[Tool Invocation via Orchestrator]
+N --> N4[Text to Speech Response]

@@ -1,0 +1,45 @@
+flowchart TD
+
+A[Zabbix Alarm Webhook] --> B[Alarm Ingestion Service]
+
+B --> C[Context Builder]
+
+C --> C1[Fetch Alarm Details]
+C --> C2[Query NetBox Topology / Dependencies]
+C --> C3[Identify Related Hostgroups]
+C --> C4[Define Time Window t-15m]
+
+C --> D[Metric Retrieval Layer]
+
+D --> D1[Zabbix Metrics API]
+D --> D2[Graylog Logs API]
+D --> D3[Other Monitoring Sources]
+
+D --> E[Anomaly Detection Engine]
+
+E --> F[AIOps Reasoning Agent]
+
+F --> F1[Root Cause Hypothesis]
+F --> F2[Correlation Analysis]
+F --> F3[Action Decision]
+
+F3 --> G{Severity High?}
+
+G -->|Yes| H[Voice Gateway / IP PBX Call]
+G -->|No| I[Create Ticket / Notification]
+
+H --> J[Speech Interaction Agent]
+
+J --> J1[Speech to Text]
+J --> J2[LLM Tool Reasoning]
+J --> J3[Dynamic Queries]
+J --> J4[Text to Speech Response]
+
+J2 --> K[Tool Library]
+
+K --> K1[Query Zabbix Metrics]
+K --> K2[Query NetBox Dependency]
+K --> K3[Query Graylog Logs]
+K --> K4[Compute Cross-Domain Impact]
+
+K --> J3
